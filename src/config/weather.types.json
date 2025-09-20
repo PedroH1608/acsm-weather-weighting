@@ -1,0 +1,35 @@
+{
+  "dry": {
+    "sunny": ["sol_00_no_clouds"],
+    "cloudy": [
+      "sol_02_few_clouds",
+      "sol_03_scattered_clouds",
+      "sol_05_broken_clouds",
+      "sol_06_overcast"
+    ]
+  },
+  "wet": {
+    "light_rain": {
+      "levels": {
+        "level_1": ["sol_31_light_drizzle"],
+        "level_2": ["sol_32_drizzle"],
+        "level_3": ["sol_33_heavy_drizzle"]
+      }
+    },
+    "rain": {
+      "levels": {
+        "level_1": ["sol_34_light_rain"],
+        "level_2": ["sol_35_rain"],
+        "level_3": ["sol_36_heavy_rain"]
+      }
+    },
+    "heavy_rain": {
+      "levels": {
+        "level_1": ["sol_41_light_thunderstorm"],
+        "level_2": ["sol_42_thunderstorm"],
+        "level_3": ["sol_43_heavy_thunderstorm"]
+      }
+    }
+  },
+  "low_visibility": ["sol_21_haze", "sol_12_fog", "sol_11_mist"]
+}
