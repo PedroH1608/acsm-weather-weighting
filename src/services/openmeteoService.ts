@@ -1,5 +1,5 @@
 import { fetchWeatherApi } from "openmeteo";
-import type { LocationWeatherData } from "../types/weather.types";
+import type { LocationWeatherData } from "../types/types.ts";
 
 export async function getWeatherData(coords: { latitude: number; longitude: number }): Promise<LocationWeatherData[]> {
   const params = {
