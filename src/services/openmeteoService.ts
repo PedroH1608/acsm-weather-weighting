@@ -1,12 +1,11 @@
 import { fetchWeatherApi } from "openmeteo";
 import type { LocationWeatherData } from "../types/types.ts";
 
-export async function getWeatherData(coords: { latitude: number; longitude: number }): Promise<LocationWeatherData[]> {
+export async function getWeatherData(coords: {
+  latitude: number;
+  longitude: number;
+}): Promise<LocationWeatherData[]> {
   const params = {
-    // "latitude": [52.0304, 50.3333, 42.1596, 52.9967, 55.8611, 51.0245],
-    // "longitude": [11.229, 6.95, 12.3524, 6.5625, 49.2426, 5.3098],
-    // "latitude": [maringa: -23.4253 bahrein: 26.0475 groelandia: 64.4352],
-    // "longitude": [maringa: -51.9386 bahrein: 50.4864 groelandia: -50.2713],
     latitude: [coords.latitude],
     longitude: [coords.longitude],
     daily: [

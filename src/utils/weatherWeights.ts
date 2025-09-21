@@ -1,4 +1,3 @@
-// filepath: src/logic/weatherWeights.ts
 export const baseWeights = {
   dry: {
     sunny: 10,
@@ -21,5 +20,9 @@ export const baseWeights = {
       level_3: 10,
     },
   },
-  low_visibility: 10,
+  low_visibility: {
+    level_1: 10,
+    level_2: 10,
+    level_3: 10,
+  },
 };

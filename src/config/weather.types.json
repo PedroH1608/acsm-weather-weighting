@@ -31,5 +31,11 @@
       }
     }
   },
-  "low_visibility": ["sol_21_haze", "sol_12_fog", "sol_11_mist"]
+  "low_visibility": {
+    "levels": {
+      "level_1": ["sol_21_haze"],
+      "level_2": ["sol_11_mist"],
+      "level_3": ["sol_12_fog"]
+    }
+  }
 }

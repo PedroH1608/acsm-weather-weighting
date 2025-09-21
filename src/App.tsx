@@ -1,5 +1,9 @@
 import { useState, type FormEvent } from "react";
-import { handleCalculate, type RainOptions } from "./utils/weatherCalculator";
+import {
+  handleCalculate,
+  calculateVariables,
+  type RainOptions,
+} from "./utils/weatherCalculator";
 import { useWeather } from "./hooks/useWeather";
 
 function App() {
@@ -29,10 +33,9 @@ function App() {
     };
 
     handleCalculate(weatherData, rainOptions);
+    calculateVariables(weatherData);
 
-    alert(
-      "Calculation complete! Check the browser's developer console for the results."
-    );
+    alert("Calculation complete");
   };
 
   return (

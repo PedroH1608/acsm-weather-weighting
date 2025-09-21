@@ -1,4 +1,3 @@
-// filepath: c:\Users\phrog\Desktop\dev\acsm-weather-weighting - Copia (2)\src\hooks\useWeather.ts
 import { useState } from "react";
 import { getWeatherData } from "../services/openmeteoService";
 import { getWeatherLocation } from "../services/geoCodingService";
