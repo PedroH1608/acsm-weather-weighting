@@ -1,10 +1,7 @@
 import { useState, type FormEvent } from "react";
-import {
-  handleCalculate,
-  calculateVariables,
-  type RainOptions,
-} from "./utils/weatherCalculator";
+import { calculateRainWeights, calculateVariables, calculateBaseWeights } from "./utils/weatherCalculator";
 import { useWeather } from "./hooks/useWeather";
+import type { RainOptions } from "./types/types";
 
 function App() {
   const [location, setLocation] = useState("");
@@ -32,8 +29,9 @@ function App() {
       heavy_rain: heavyRain,
     };
 
-    handleCalculate(weatherData, rainOptions);
+    calculateRainWeights(weatherData, rainOptions);
     calculateVariables(weatherData);
+    console.log(calculateBaseWeights(weatherData));
 
     alert("Calculation complete");
   };
@@ -42,15 +40,15 @@ function App() {
     <>
       <div>
         <input
-          type="text"
+          type='text'
           value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="Ex: Interlagos, Brazil"
+          onChange={e => setLocation(e.target.value)}
+          placeholder='Ex: Interlagos, Brazil'
         />
         <button onClick={handleSearch}>Search</button>
       </div>
       {loading && <p>Loading weather data...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p>{error}</p>}
       {weatherData && (
         <div>
           <h2>
@@ -71,32 +69,32 @@ function App() {
             <h3>Rain Options to Apply:</h3>
             <div>
               <input
-                type="checkbox"
-                id="lightRain"
+                type='checkbox'
+                id='lightRain'
                 checked={lightRain}
-                onChange={(e) => setLightRain(e.target.checked)}
+                onChange={e => setLightRain(e.target.checked)}
               />
-              <label htmlFor="lightRain">Light Rain (Drizzle)</label>
+              <label htmlFor='lightRain'>Light Rain (Drizzle)</label>
             </div>
             <div>
               <input
-                type="checkbox"
-                id="rain"
+                type='checkbox'
+                id='rain'
                 checked={rain}
-                onChange={(e) => setRain(e.target.checked)}
+                onChange={e => setRain(e.target.checked)}
               />
-              <label htmlFor="rain">Rain</label>
+              <label htmlFor='rain'>Rain</label>
             </div>
             <div>
               <input
-                type="checkbox"
-                id="heavyRain"
+                type='checkbox'
+                id='heavyRain'
                 checked={heavyRain}
-                onChange={(e) => setHeavyRain(e.target.checked)}
+                onChange={e => setHeavyRain(e.target.checked)}
               />
-              <label htmlFor="heavyRain">Heavy Rain (Thunderstorm)</label>
+              <label htmlFor='heavyRain'>Heavy Rain (Thunderstorm)</label>
             </div>
-            <button type="submit">Submit</button>
+            <button type='submit'>Submit</button>
           </form>
         </div>
       )}
