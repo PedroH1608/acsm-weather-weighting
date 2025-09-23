@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getWeatherData } from "../services/openmeteoService";
 import { getWeatherLocation } from "../services/geoCodingService";
 import type { LocationWeatherData } from "../types/types.ts";
+import { logger } from "../utils/logger.ts";
 
 export const useWeather = () => {
   const [weatherData, setWeatherData] = useState<LocationWeatherData | null>(
@@ -31,7 +32,7 @@ export const useWeather = () => {
       }
     } catch (err) {
       setError("An error occurred while fetching data.");
-      console.error("Error:", err);
+      logger.error("Error:", err);
     } finally {
       setLoading(false);
     }

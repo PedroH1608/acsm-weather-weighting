@@ -1,5 +1,6 @@
 import { fetchWeatherApi } from "openmeteo";
 import type { LocationWeatherData } from "../types/types.ts";
+import { logger } from "../utils/logger.ts";
 
 export async function getWeatherData(coords: {
   latitude: number;
@@ -52,7 +53,7 @@ export async function getWeatherData(coords: {
       },
     };
 
-    console.log("\nDaily data", weatherData.daily);
+    logger.log("\nDaily data", weatherData.daily);
 
     const windDirections = weatherData.daily.wind_direction_10m_dominant;
     const averageWindDirection =

@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 README.md
+src/utils/logger.ts
 
 # Editor directories and files
 .vscode/*

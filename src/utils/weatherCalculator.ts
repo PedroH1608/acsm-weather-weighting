@@ -10,6 +10,7 @@ import {
   RAIN_MODIFIERS,
   LOW_VISIBILITY_MODIFIERS,
 } from "../config/calculation.config";
+import { logger } from "./logger.ts";
 
 const maxWeight = MAX_WEIGHT;
 const totalPercentage = TOTAL_PERCENTAGE;
@@ -32,6 +33,7 @@ export function calculateBaseWeights(weatherData: LocationWeatherData) {
   const dryTotalWeight = (dryPercentage / totalPercentage) * maxWeight;
   const wetTotalWeight = (wetPercentage / totalPercentage) * maxWeight;
 
+  logger.log({ dryTotalWeight, wetTotalWeight });
   return { dryTotalWeight, wetTotalWeight };
 }
 
@@ -77,9 +79,16 @@ export function calculateRainWeights(
   const finalCalculatedWeights: CalculatedWeights = {};
 
   (Object.keys(options) as Array<keyof RainOptions>).forEach(rainType => {
-    if (!options[rainType]) return;
-
     const rainConfig = weatherConfig.wet[rainType];
+    if (!options[rainType]) {
+      finalCalculatedWeights[rainType] = {
+        [rainConfig.levels.level_1[0]]: 0,
+        [rainConfig.levels.level_2[0]]: 0,
+        [rainConfig.levels.level_3[0]]: 0,
+      };
+      return;
+    }
+
     const baseWetWeight = {
       level_1: wetTotalWeight,
       level_2: wetTotalWeight,
@@ -100,7 +109,7 @@ export function calculateRainWeights(
     };
   });
 
-  console.log(finalCalculatedWeights);
+  logger.log(finalCalculatedWeights);
   return finalCalculatedWeights;
 }
 
@@ -176,73 +185,7 @@ export function calculateVariables(
     dry: calculateCloudyConditionWeights(weatherData),
   };
 
-  console.log(finalCalculatedWeights);
+  logger.log(finalCalculatedWeights);
   return finalCalculatedWeights;
 }
-
-// export function calculateVariables(
-//   weatherData: LocationWeatherData
-// ): CalculatedWeights {
-//   const { averageTemperature, totalPrecipitation, averagePrecipProbability } =
-//     weatherData;
-
-//   const finalCalculatedWeights: CalculatedWeights = {};
-
-//   const lowVisibilityConfig = weatherConfig.low_visibility;
-//   const baseLowVisibilityWeight = baseWeights.low_visibility;
-//   const sunnyConfig = weatherConfig.dry.sunny[0];
-//   const cloudyConfig = weatherConfig.dry.cloudy;
-
-//   if (averageTemperature < 10) {
-//     console.log("averageTemperature < 10");
-//     const { level1Weight, level2Weight, level3Weight } =
-//       getPrecipitationBaseWeights(
-//         totalPrecipitation,
-//         baseLowVisibilityWeight,
-//         lowVisibilityWeights
-//       );
-
-//     finalCalculatedWeights.low_visibility = {
-//       [lowVisibilityConfig.levels.level_1[0]]: level1Weight,
-//       [lowVisibilityConfig.levels.level_2[0]]: level2Weight,
-//       [lowVisibilityConfig.levels.level_3[0]]: level3Weight,
-//     };
-
-//     finalCalculatedWeights.dry = {
-//       [sunnyConfig]: 0,
-//     };
-//   } else {
-//     console.log("averageTemperature >= 10");
-
-//     finalCalculatedWeights.low_visibility = {
-//       [lowVisibilityConfig.levels.level_1[0]]: 0,
-//       [lowVisibilityConfig.levels.level_2[0]]: 0,
-//       [lowVisibilityConfig.levels.level_3[0]]: 0,
-//     };
-//   }
-
-//   const dryWeights: { [weatherCondition: string]: number } = {};
-
-//   if (averageTemperature < 10 || averagePrecipProbability > 30) {
-//     dryWeights[sunnyConfig] = 0;
-//   } else {
-//     dryWeights[sunnyConfig] = baseWeights.dry.sunny;
-//   }
-
-//   if (averagePrecipProbability > 30) {
-//     console.log("averagePrecipProbability > 30");
-//     cloudyConfig.forEach(condition => {
-//       dryWeights[condition] = baseWeights.dry.cloudy;
-//     });
-//   } else {
-//     console.log("averagePrecipProbability <= 30");
-//     cloudyConfig.forEach(condition => {
-//       dryWeights[condition] = 0;
-//     });
-//   }
-
-//   finalCalculatedWeights.dry = dryWeights;
-
-//   console.log(finalCalculatedWeights);
-//   return finalCalculatedWeights;
-// }
+// TODO: fix multiple selection not distributing weights
